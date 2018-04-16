@@ -23,13 +23,12 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
-    
+    [self.ui_tabBar setSelectedItem:_ui_barLibrary];
     UICollectionViewFlowLayout *aFlowLayout = [[UICollectionViewFlowLayout alloc] init];
-    [aFlowLayout setItemSize:CGSizeMake(100, 50)];
+    [aFlowLayout setItemSize:CGSizeMake(100, 100)];
     [aFlowLayout setScrollDirection:UICollectionViewScrollDirectionVertical];
     self.libraryVC = [[LibraryCollectionViewController alloc] initWithCollectionViewLayout:aFlowLayout];
-//    [self addChildViewController:_libraryVC];
-    [self.view addSubview:_libraryVC.view];
+    [self.view insertSubview:self.libraryVC.view belowSubview:_ui_tabBar];
 }
 
 

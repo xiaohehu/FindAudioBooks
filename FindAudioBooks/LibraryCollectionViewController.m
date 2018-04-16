@@ -24,6 +24,7 @@ static NSString * const reuseIdentifier = @"Cell";
 
 - (void)viewWillAppear:(BOOL)animated {
     [self prepareData];
+    [self.collectionView setBackgroundColor:[UIColor clearColor]];
 }
 
 - (void)viewDidLoad {
@@ -62,7 +63,7 @@ static NSString * const reuseIdentifier = @"Cell";
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
     int num_cellsCount = (int) array_imageArray.count;
-    return num_cellsCount;
+    return 20;
 //    return 0;
 }
 
@@ -70,8 +71,8 @@ static NSString * const reuseIdentifier = @"Cell";
     UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:reuseIdentifier forIndexPath:indexPath];
     
     // Configure the cell
-    if ((int)indexPath <= 2) {
-        NSString *str_imageName = [array_imageArray objectAtIndex:(int)indexPath];
+    if (indexPath.item <= 3) {
+        NSString *str_imageName = [array_imageArray objectAtIndex:(int)indexPath.item];
         UIImage *uii_thumb = [UIImage imageNamed:str_imageName];
         UIImageView *uiiv_cellThumb = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, cell.bounds.size.width, cell.bounds.size.height)];
         [uiiv_cellThumb setImage:uii_thumb];
