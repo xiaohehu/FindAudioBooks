@@ -7,8 +7,14 @@
 //
 
 #import "ViewController.h"
+#import "LibraryCollectionViewController.h"
 
 @interface ViewController ()
+@property (weak, nonatomic) IBOutlet UITabBar *ui_tabBar;
+@property (weak, nonatomic) IBOutlet UITabBarItem *ui_barLibrary;
+@property (weak, nonatomic) IBOutlet UITabBarItem *ui_barSearch;
+
+@property (nonatomic, strong) LibraryCollectionViewController *libraryVC;
 
 @end
 
@@ -17,6 +23,13 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
+    
+    UICollectionViewFlowLayout *aFlowLayout = [[UICollectionViewFlowLayout alloc] init];
+    [aFlowLayout setItemSize:CGSizeMake(100, 50)];
+    [aFlowLayout setScrollDirection:UICollectionViewScrollDirectionVertical];
+    self.libraryVC = [[LibraryCollectionViewController alloc] initWithCollectionViewLayout:aFlowLayout];
+//    [self addChildViewController:_libraryVC];
+    [self.view addSubview:_libraryVC.view];
 }
 
 

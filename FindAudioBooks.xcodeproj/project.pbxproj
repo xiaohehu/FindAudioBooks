@@ -15,6 +15,12 @@
 		0878520C2083F5AC008C523E /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 0878520B2083F5AC008C523E /* main.m */; };
 		087852162083F5AC008C523E /* FindAudioBooksTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 087852152083F5AC008C523E /* FindAudioBooksTests.m */; };
 		087852212083F5AC008C523E /* FindAudioBooksUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 087852202083F5AC008C523E /* FindAudioBooksUITests.m */; };
+		087852332083F89B008C523E /* LibraryCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 087852322083F89B008C523E /* LibraryCollectionViewController.m */; };
+		087852382083FDC6008C523E /* libsqlite3.0.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 087852372083FDC6008C523E /* libsqlite3.0.tbd */; };
+		0878523E20840644008C523E /* thumb3.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 0878523A20840643008C523E /* thumb3.jpg */; };
+		0878523F20840644008C523E /* thumb4.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 0878523B20840643008C523E /* thumb4.jpg */; };
+		0878524020840644008C523E /* thumb2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 0878523C20840643008C523E /* thumb2.jpg */; };
+		0878524120840644008C523E /* thumb1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 0878523D20840643008C523E /* thumb1.jpg */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,6 +57,14 @@
 		0878521C2083F5AC008C523E /* FindAudioBooksUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FindAudioBooksUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		087852202083F5AC008C523E /* FindAudioBooksUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FindAudioBooksUITests.m; sourceTree = "<group>"; };
 		087852222083F5AC008C523E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		087852312083F89B008C523E /* LibraryCollectionViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LibraryCollectionViewController.h; sourceTree = "<group>"; };
+		087852322083F89B008C523E /* LibraryCollectionViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LibraryCollectionViewController.m; sourceTree = "<group>"; };
+		087852352083FB24008C523E /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
+		087852372083FDC6008C523E /* libsqlite3.0.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.0.tbd; path = usr/lib/libsqlite3.0.tbd; sourceTree = SDKROOT; };
+		0878523A20840643008C523E /* thumb3.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = thumb3.jpg; sourceTree = "<group>"; };
+		0878523B20840643008C523E /* thumb4.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = thumb4.jpg; sourceTree = "<group>"; };
+		0878523C20840643008C523E /* thumb2.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = thumb2.jpg; sourceTree = "<group>"; };
+		0878523D20840643008C523E /* thumb1.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = thumb1.jpg; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,6 +72,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				087852382083FDC6008C523E /* libsqlite3.0.tbd in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -85,6 +100,7 @@
 				087852142083F5AC008C523E /* FindAudioBooksTests */,
 				0878521F2083F5AC008C523E /* FindAudioBooksUITests */,
 				087851FA2083F5A9008C523E /* Products */,
+				087852342083FB24008C523E /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -105,6 +121,9 @@
 				087851FD2083F5A9008C523E /* AppDelegate.m */,
 				087851FF2083F5A9008C523E /* ViewController.h */,
 				087852002083F5A9008C523E /* ViewController.m */,
+				087852312083F89B008C523E /* LibraryCollectionViewController.h */,
+				087852322083F89B008C523E /* LibraryCollectionViewController.m */,
+				087852392084062A008C523E /* Assets */,
 				087852022083F5A9008C523E /* Main.storyboard */,
 				087852052083F5AC008C523E /* Assets.xcassets */,
 				087852072083F5AC008C523E /* LaunchScreen.storyboard */,
@@ -130,6 +149,26 @@
 				087852222083F5AC008C523E /* Info.plist */,
 			);
 			path = FindAudioBooksUITests;
+			sourceTree = "<group>";
+		};
+		087852342083FB24008C523E /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				087852372083FDC6008C523E /* libsqlite3.0.tbd */,
+				087852352083FB24008C523E /* libsqlite3.tbd */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		087852392084062A008C523E /* Assets */ = {
+			isa = PBXGroup;
+			children = (
+				0878523D20840643008C523E /* thumb1.jpg */,
+				0878523C20840643008C523E /* thumb2.jpg */,
+				0878523A20840643008C523E /* thumb3.jpg */,
+				0878523B20840643008C523E /* thumb4.jpg */,
+			);
+			path = Assets;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -235,9 +274,13 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0878523E20840644008C523E /* thumb3.jpg in Resources */,
 				087852092083F5AC008C523E /* LaunchScreen.storyboard in Resources */,
 				087852062083F5AC008C523E /* Assets.xcassets in Resources */,
+				0878524020840644008C523E /* thumb2.jpg in Resources */,
+				0878524120840644008C523E /* thumb1.jpg in Resources */,
 				087852042083F5A9008C523E /* Main.storyboard in Resources */,
+				0878523F20840644008C523E /* thumb4.jpg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -262,6 +305,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				087852332083F89B008C523E /* LibraryCollectionViewController.m in Sources */,
 				087852012083F5A9008C523E /* ViewController.m in Sources */,
 				0878520C2083F5AC008C523E /* main.m in Sources */,
 				087851FE2083F5A9008C523E /* AppDelegate.m in Sources */,
@@ -436,6 +480,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = CP5PKPJKHY;
 				INFOPLIST_FILE = FindAudioBooks/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -453,6 +498,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = CP5PKPJKHY;
 				INFOPLIST_FILE = FindAudioBooks/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
