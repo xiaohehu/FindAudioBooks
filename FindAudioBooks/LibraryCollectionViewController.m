@@ -51,7 +51,7 @@ static NSString * const reuseIdentifier = @"Cell";
 */
 
 - (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout insetForSectionAtIndex:(NSInteger)section{
-    return UIEdgeInsetsMake(50, 5, 0, 5);
+    return UIEdgeInsetsMake(50, 5, 50, 5);
 }
 
 #pragma mark <UICollectionViewDataSource>

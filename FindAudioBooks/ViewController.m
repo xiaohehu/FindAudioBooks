@@ -38,9 +38,9 @@
     [aFlowLayout setScrollDirection:UICollectionViewScrollDirectionVertical];
     self.libraryVC = [[LibraryCollectionViewController alloc] initWithCollectionViewLayout:aFlowLayout];
     self.scannerVC = [[ScanViewController alloc] init];
-    _scannerVC.view.backgroundColor = [UIColor greenColor];
-    
     vcArray = [NSMutableArray arrayWithObjects:_libraryVC, _scannerVC, nil];
+    _libraryVC.tabBarItem = [[UITabBarItem alloc] initWithTabBarSystemItem:UITabBarSystemItemRecents tag:0];
+    _scannerVC.tabBarItem = [[UITabBarItem alloc] initWithTabBarSystemItem:UITabBarSystemItemSearch tag:1];
     [self.tabBarVC setViewControllers:vcArray];
 
 }
