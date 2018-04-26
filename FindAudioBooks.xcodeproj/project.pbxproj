@@ -21,6 +21,13 @@
 		0878523F20840644008C523E /* thumb4.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 0878523B20840643008C523E /* thumb4.jpg */; };
 		0878524020840644008C523E /* thumb2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 0878523C20840643008C523E /* thumb2.jpg */; };
 		0878524120840644008C523E /* thumb1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 0878523D20840643008C523E /* thumb1.jpg */; };
+		08785243208D0B65008C523E /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08785242208D0B65008C523E /* CoreGraphics.framework */; };
+		08785246208D0B80008C523E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08785244208D0B80008C523E /* Foundation.framework */; };
+		08785247208D0B80008C523E /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08785245208D0B80008C523E /* AVFoundation.framework */; };
+		08785249208D0B87008C523E /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08785248208D0B87008C523E /* UIKit.framework */; };
+		0878524B208D0BA4008C523E /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0878524A208D0BA4008C523E /* QuartzCore.framework */; };
+		0878524E208D1328008C523E /* ScanViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0878524D208D1328008C523E /* ScanViewController.m */; };
+		08813C1E2091777E005B55BD /* TabBarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 08813C1D2091777E005B55BD /* TabBarViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -65,6 +72,15 @@
 		0878523B20840643008C523E /* thumb4.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = thumb4.jpg; sourceTree = "<group>"; };
 		0878523C20840643008C523E /* thumb2.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = thumb2.jpg; sourceTree = "<group>"; };
 		0878523D20840643008C523E /* thumb1.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = thumb1.jpg; sourceTree = "<group>"; };
+		08785242208D0B65008C523E /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		08785244208D0B80008C523E /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		08785245208D0B80008C523E /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		08785248208D0B87008C523E /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		0878524A208D0BA4008C523E /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		0878524C208D1328008C523E /* ScanViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ScanViewController.h; sourceTree = "<group>"; };
+		0878524D208D1328008C523E /* ScanViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ScanViewController.m; sourceTree = "<group>"; };
+		08813C1C2091777E005B55BD /* TabBarViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TabBarViewController.h; sourceTree = "<group>"; };
+		08813C1D2091777E005B55BD /* TabBarViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TabBarViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -72,6 +88,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0878524B208D0BA4008C523E /* QuartzCore.framework in Frameworks */,
+				08785249208D0B87008C523E /* UIKit.framework in Frameworks */,
+				08785246208D0B80008C523E /* Foundation.framework in Frameworks */,
+				08785247208D0B80008C523E /* AVFoundation.framework in Frameworks */,
+				08785243208D0B65008C523E /* CoreGraphics.framework in Frameworks */,
 				087852382083FDC6008C523E /* libsqlite3.0.tbd in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -121,8 +142,12 @@
 				087851FD2083F5A9008C523E /* AppDelegate.m */,
 				087851FF2083F5A9008C523E /* ViewController.h */,
 				087852002083F5A9008C523E /* ViewController.m */,
+				08813C1C2091777E005B55BD /* TabBarViewController.h */,
+				08813C1D2091777E005B55BD /* TabBarViewController.m */,
 				087852312083F89B008C523E /* LibraryCollectionViewController.h */,
 				087852322083F89B008C523E /* LibraryCollectionViewController.m */,
+				0878524C208D1328008C523E /* ScanViewController.h */,
+				0878524D208D1328008C523E /* ScanViewController.m */,
 				087852392084062A008C523E /* Assets */,
 				087852022083F5A9008C523E /* Main.storyboard */,
 				087852052083F5AC008C523E /* Assets.xcassets */,
@@ -154,6 +179,11 @@
 		087852342083FB24008C523E /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				0878524A208D0BA4008C523E /* QuartzCore.framework */,
+				08785248208D0B87008C523E /* UIKit.framework */,
+				08785245208D0B80008C523E /* AVFoundation.framework */,
+				08785244208D0B80008C523E /* Foundation.framework */,
+				08785242208D0B65008C523E /* CoreGraphics.framework */,
 				087852372083FDC6008C523E /* libsqlite3.0.tbd */,
 				087852352083FB24008C523E /* libsqlite3.tbd */,
 			);
@@ -306,8 +336,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				087852332083F89B008C523E /* LibraryCollectionViewController.m in Sources */,
+				0878524E208D1328008C523E /* ScanViewController.m in Sources */,
 				087852012083F5A9008C523E /* ViewController.m in Sources */,
 				0878520C2083F5AC008C523E /* main.m in Sources */,
+				08813C1E2091777E005B55BD /* TabBarViewController.m in Sources */,
 				087851FE2083F5A9008C523E /* AppDelegate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -22,20 +22,16 @@ static NSString * const reuseIdentifier = @"Cell";
     array_imageArray = @[@"thumb1.jpg", @"thumb2.jpg", @"thumb3.jpg", @"thumb4.jpg"];
 }
 
-- (void)viewWillAppear:(BOOL)animated {
-    [self prepareData];
-    [self.collectionView setBackgroundColor:[UIColor clearColor]];
-}
-
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+    self.title = @"Library";
+    [self prepareData];
     // Uncomment the following line to preserve selection between presentations
     // self.clearsSelectionOnViewWillAppear = NO;
     
     // Register cell classes
     [self.collectionView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:reuseIdentifier];
-    
+    self.collectionView.backgroundColor = [UIColor clearColor];
     // Do any additional setup after loading the view.
 }
 
@@ -53,6 +49,10 @@ static NSString * const reuseIdentifier = @"Cell";
     // Pass the selected object to the new view controller.
 }
 */
+
+- (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout insetForSectionAtIndex:(NSInteger)section{
+    return UIEdgeInsetsMake(50, 5, 0, 5);
+}
 
 #pragma mark <UICollectionViewDataSource>
 
@@ -77,6 +77,7 @@ static NSString * const reuseIdentifier = @"Cell";
         UIImageView *uiiv_cellThumb = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, cell.bounds.size.width, cell.bounds.size.height)];
         [uiiv_cellThumb setImage:uii_thumb];
         [cell.contentView addSubview:uiiv_cellThumb];
+        [cell.contentView setBackgroundColor:[UIColor greenColor]];
     } else {
         [cell.contentView setBackgroundColor:[UIColor redColor]];
     }
