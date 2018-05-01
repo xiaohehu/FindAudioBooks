@@ -8,6 +8,13 @@
 
 #import <Foundation/Foundation.h>
 
-@interface FetchParseBookInfo : NSObject
+@interface FetchParseBookInfo : NSObject {
+    NSString *str_bsnNum;
+}
 
+
+- (void) setBSN:(NSString *)str_bsn;
+- (NSString *) getCoverUrl;
+- (NSString *) getBookTitle;
+- (NSString *) getBookBSN;
 @end

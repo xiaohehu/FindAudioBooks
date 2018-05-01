@@ -8,6 +8,7 @@
 
 #import "ScanViewController.h"
 #import <AVFoundation/AVFoundation.h>
+#import "FetchParseBookInfo.h"
 
 @interface ScanViewController () <AVCaptureMetadataOutputObjectsDelegate> {
     AVCaptureSession *_session;
@@ -21,11 +22,12 @@
     float videoSize;
 }
 
-@property (nonatomic, strong) UIView        *uiv_bookInfoContainer;
-@property (nonatomic, strong) UIImageView   *uiiv_cover;
-@property (nonatomic, strong) UILabel       *uil_bsn;
-@property (nonatomic, strong) UILabel       *uil_title;
-
+@property (nonatomic, strong) UIView                *uiv_bookInfoContainer;
+@property (nonatomic, strong) UIImageView           *uiiv_cover;
+@property (nonatomic, strong) UILabel               *uil_bsn;
+@property (nonatomic, strong) UILabel               *uil_title;
+@property (nonatomic, strong) FetchParseBookInfo    *fetcher;
+@property (nonatomic, strong) UIButton              *uib_fetchToggle;
 
 @end
 
@@ -45,6 +47,8 @@
     [self initVideoSession];
     
     [self initBookInfoView];
+    
+    [self initFetchToggleButton];
 }
 
 - (void) initVideoSession {
@@ -89,7 +93,7 @@
                                                         _prevLayer.frame.origin.y + _prevLayer.frame.size.height + topPad,
                                                         self.view.frame.size.width,
                                                            self.view.frame.size.height - _prevLayer.frame.origin.y - _prevLayer.frame.size.height - bottomPad)];
-    [_uiv_bookInfoContainer setBackgroundColor:[UIColor redColor]];
+    [_uiv_bookInfoContainer setBackgroundColor:[UIColor clearColor]];
     padding = _uiv_bookInfoContainer.frame.size.height * 0.1 / 2.0;
     bookInfoHeight = _uiv_bookInfoContainer.frame.size.height * bookInfoPercentage;
     [self.view addSubview:_uiv_bookInfoContainer];
@@ -107,7 +111,7 @@
                                                          _uiiv_cover.frame.size.height + padding,
                                                          _uiv_bookInfoContainer.frame.size.width,
                                                          bookInfoHeight)];
-    [_uil_bsn setBackgroundColor:[UIColor blackColor]];
+    [_uil_bsn setBackgroundColor:[UIColor clearColor]];
     [_uil_bsn setTextAlignment:NSTextAlignmentCenter];
     [_uiv_bookInfoContainer addSubview: _uil_bsn];
     
@@ -116,9 +120,25 @@
                                                            _uil_bsn.frame.origin.y + _uil_bsn.frame.size.height + padding,
                                                            _uiv_bookInfoContainer.frame.size.width,
                                                            bookInfoHeight)];
-    [_uil_title setBackgroundColor:[UIColor greenColor]];
+    [_uil_title setBackgroundColor:[UIColor clearColor]];
     [_uil_title setTextAlignment:NSTextAlignmentCenter];
     [_uiv_bookInfoContainer addSubview: _uil_title];
+}
+
+- (void) initFetchToggleButton {
+    _uib_fetchToggle = [[UIButton alloc] initWithFrame:_prevLayer.frame];
+    [_uib_fetchToggle setBackgroundColor:[UIColor clearColor]];
+    [_uib_fetchToggle setEnabled: YES];
+    [_uib_fetchToggle addTarget:self action:@selector(toggleFetcher) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview: _uib_fetchToggle];
+}
+
+- (void) toggleFetcher {
+    if ([_session isRunning]) {
+        return;
+    } else {
+        [_session startRunning];
+    }
 }
 
 - (void)captureOutput:(AVCaptureOutput *)captureOutput didOutputMetadataObjects:(NSArray *)metadataObjects fromConnection:(AVCaptureConnection *)connection
@@ -141,8 +161,20 @@
             }
         }
         if (detectionString != nil) {
-            // TO DO get info and display
+            NSLog(@"FIND THE BOOK: \n %@", detectionString);
+            _fetcher = nil;
+            _fetcher = [[FetchParseBookInfo alloc] init];
+            [_fetcher setBSN: detectionString];
+            [_uil_bsn setText:[NSString stringWithFormat:@"%@: %@", @"BSN", [_fetcher getBookBSN]]];
+            [_uil_title setText:[NSString stringWithFormat:@"%@: %@", @"Title", [_fetcher getBookTitle]]];
+            NSURL *url = [NSURL URLWithString:[_fetcher getCoverUrl]];
+            NSData *data = [NSData dataWithContentsOfURL:url];
+            UIImage *uii_cover = [[UIImage alloc] initWithData:data];
+            [_uiiv_cover setImage: uii_cover];
+            [_uiiv_cover setContentMode: UIViewContentModeScaleAspectFit];
+            [_session stopRunning];
         }
+        break;
     }
 }
 
