@@ -42,7 +42,7 @@
     _libraryVC.tabBarItem = [[UITabBarItem alloc] initWithTabBarSystemItem:UITabBarSystemItemRecents tag:0];
     _scannerVC.tabBarItem = [[UITabBarItem alloc] initWithTabBarSystemItem:UITabBarSystemItemSearch tag:1];
     [self.tabBarVC setViewControllers:vcArray];
-
+    self.tabBarVC.selectedIndex = 0;
 }
 
 

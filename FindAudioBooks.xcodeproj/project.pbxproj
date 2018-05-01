@@ -28,6 +28,7 @@
 		0878524B208D0BA4008C523E /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0878524A208D0BA4008C523E /* QuartzCore.framework */; };
 		0878524E208D1328008C523E /* ScanViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0878524D208D1328008C523E /* ScanViewController.m */; };
 		08813C1E2091777E005B55BD /* TabBarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 08813C1D2091777E005B55BD /* TabBarViewController.m */; };
+		08813C212098176D005B55BD /* FetchParseBookInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 08813C202098176D005B55BD /* FetchParseBookInfo.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -81,6 +82,8 @@
 		0878524D208D1328008C523E /* ScanViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ScanViewController.m; sourceTree = "<group>"; };
 		08813C1C2091777E005B55BD /* TabBarViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TabBarViewController.h; sourceTree = "<group>"; };
 		08813C1D2091777E005B55BD /* TabBarViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TabBarViewController.m; sourceTree = "<group>"; };
+		08813C1F2098176D005B55BD /* FetchParseBookInfo.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FetchParseBookInfo.h; sourceTree = "<group>"; };
+		08813C202098176D005B55BD /* FetchParseBookInfo.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FetchParseBookInfo.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -148,6 +151,8 @@
 				087852322083F89B008C523E /* LibraryCollectionViewController.m */,
 				0878524C208D1328008C523E /* ScanViewController.h */,
 				0878524D208D1328008C523E /* ScanViewController.m */,
+				08813C1F2098176D005B55BD /* FetchParseBookInfo.h */,
+				08813C202098176D005B55BD /* FetchParseBookInfo.m */,
 				087852392084062A008C523E /* Assets */,
 				087852022083F5A9008C523E /* Main.storyboard */,
 				087852052083F5AC008C523E /* Assets.xcassets */,
@@ -335,6 +340,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				08813C212098176D005B55BD /* FetchParseBookInfo.m in Sources */,
 				087852332083F89B008C523E /* LibraryCollectionViewController.m in Sources */,
 				0878524E208D1328008C523E /* ScanViewController.m in Sources */,
 				087852012083F5A9008C523E /* ViewController.m in Sources */,
