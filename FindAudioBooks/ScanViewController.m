@@ -28,6 +28,7 @@
 @property (nonatomic, strong) UILabel               *uil_title;
 @property (nonatomic, strong) FetchParseBookInfo    *fetcher;
 @property (nonatomic, strong) UIButton              *uib_fetchToggle;
+@property (nonatomic, strong) UIButton              *uib_searchAudible;
 
 @end
 
@@ -93,7 +94,7 @@
                                                         _prevLayer.frame.origin.y + _prevLayer.frame.size.height + topPad,
                                                         self.view.frame.size.width,
                                                            self.view.frame.size.height - _prevLayer.frame.origin.y - _prevLayer.frame.size.height - bottomPad)];
-    [_uiv_bookInfoContainer setBackgroundColor:[UIColor clearColor]];
+    [_uiv_bookInfoContainer setBackgroundColor:[UIColor redColor]];
     padding = _uiv_bookInfoContainer.frame.size.height * 0.1 / 2.0;
     bookInfoHeight = _uiv_bookInfoContainer.frame.size.height * bookInfoPercentage;
     [self.view addSubview:_uiv_bookInfoContainer];
@@ -111,7 +112,7 @@
                                                          _uiiv_cover.frame.size.height + padding,
                                                          _uiv_bookInfoContainer.frame.size.width,
                                                          bookInfoHeight)];
-    [_uil_bsn setBackgroundColor:[UIColor clearColor]];
+    [_uil_bsn setBackgroundColor:[UIColor yellowColor]];
     [_uil_bsn setTextAlignment:NSTextAlignmentCenter];
     [_uiv_bookInfoContainer addSubview: _uil_bsn];
     
@@ -120,9 +121,20 @@
                                                            _uil_bsn.frame.origin.y + _uil_bsn.frame.size.height + padding,
                                                            _uiv_bookInfoContainer.frame.size.width,
                                                            bookInfoHeight)];
-    [_uil_title setBackgroundColor:[UIColor clearColor]];
+    [_uil_title setBackgroundColor:[UIColor greenColor]];
     [_uil_title setTextAlignment:NSTextAlignmentCenter];
     [_uiv_bookInfoContainer addSubview: _uil_title];
+    
+    float imageButtonPadding = 10;
+    float searchButtonX = _uiiv_cover.frame.origin.x + _uiiv_cover.frame.size.width + imageButtonPadding;
+    float searchButtonY = _uiiv_cover.frame.size.height / 4.0;
+    float searchButtonHeight = _uiiv_cover.frame.size.height / 2.0;
+    float searchButtonWidth = _uiv_bookInfoContainer.frame.size.width - _uiiv_cover.frame.origin.x - _uiiv_cover.frame.size.width - 2 * imageButtonPadding;
+    _uib_searchAudible = [[UIButton alloc] initWithFrame:CGRectMake(searchButtonX, searchButtonY, searchButtonWidth, searchButtonHeight)];
+    [_uib_searchAudible setBackgroundColor:[UIColor orangeColor]];
+    [_uib_searchAudible setTitle:@"Search in Audible" forState:UIControlStateNormal];
+    [_uib_searchAudible.titleLabel setAdjustsFontSizeToFitWidth:true];
+    [_uiv_bookInfoContainer addSubview: _uib_searchAudible];
 }
 
 - (void) initFetchToggleButton {
@@ -165,14 +177,29 @@
             _fetcher = nil;
             _fetcher = [[FetchParseBookInfo alloc] init];
             [_fetcher setBSN: detectionString];
-            [_uil_bsn setText:[NSString stringWithFormat:@"%@: %@", @"BSN", [_fetcher getBookBSN]]];
-            [_uil_title setText:[NSString stringWithFormat:@"%@: %@", @"Title", [_fetcher getBookTitle]]];
-            NSURL *url = [NSURL URLWithString:[_fetcher getCoverUrl]];
-            NSData *data = [NSData dataWithContentsOfURL:url];
-            UIImage *uii_cover = [[UIImage alloc] initWithData:data];
-            [_uiiv_cover setImage: uii_cover];
-            [_uiiv_cover setContentMode: UIViewContentModeScaleAspectFit];
-            [_session stopRunning];
+            if ([_fetcher getBookInfo]) {
+                [_uil_bsn setText:[NSString stringWithFormat:@"%@: %@", @"BSN", [_fetcher getBookBSN]]];
+                [_uil_title setText:[NSString stringWithFormat:@"%@: %@", @"Title", [_fetcher getBookTitle]]];
+                NSURL *url = [NSURL URLWithString:[_fetcher getCoverUrl]];
+                NSData *data = [NSData dataWithContentsOfURL:url];
+                UIImage *uii_cover = [[UIImage alloc] initWithData:data];
+                [_uiiv_cover setImage: uii_cover];
+                [_uiiv_cover setContentMode: UIViewContentModeScaleAspectFit];
+                [_session stopRunning];
+            } else {
+                [_session stopRunning];
+                UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Errow With Finding Book"
+                                                                                         message:@"We cannot find the book by this barcode."
+                                                                                  preferredStyle:UIAlertControllerStyleAlert];
+                //We add buttons to the alert controller by creating UIAlertActions:
+                UIAlertAction *actionOk = [UIAlertAction actionWithTitle:@"Ok"
+                                                                   style:UIAlertActionStyleDefault
+                                                                    handler:^(UIAlertAction * action) {
+                                                                        [_session startRunning];
+                                                                    }];
+                [alertController addAction:actionOk];
+                [self presentViewController:alertController animated:YES completion:nil];
+            }
         }
         break;
     }
