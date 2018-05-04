@@ -264,6 +264,15 @@
     }
 }
 
+- (void)viewDidDisappear:(BOOL)animated {
+    [_uil_isbn setText:nil];
+    [_uil_title setText:nil];
+    [_uiiv_cover setImage:nil];
+    [_session startRunning];
+    [_uiv_searchContainer removeFromSuperview];
+    _uiv_searchContainer = nil;
+}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
