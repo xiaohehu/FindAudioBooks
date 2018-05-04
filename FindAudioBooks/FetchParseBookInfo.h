@@ -13,9 +13,9 @@
 }
 
 
-- (void) setBSN:(NSString *)str_bsn;
+- (void) setIsbn:(NSString *)str_bsn;
 - (BOOL) getBookInfo;
 - (NSString *) getCoverUrl;
 - (NSString *) getBookTitle;
-- (NSString *) getBookBSN;
+- (NSString *) getBookIsbn;
 @end

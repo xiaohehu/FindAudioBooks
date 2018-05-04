@@ -15,7 +15,7 @@
     BOOL            getTheBookInfo;
 }
 
-- (void) setBSN:(NSString *)str_bsn {
+- (void) setIsbn:(NSString *)str_bsn {
     str_bsnNum = str_bsn;
     [self fetchData];
 }
@@ -55,7 +55,7 @@
     return str_bookTitle;
 }
 
-- (NSString *) getBookBSN {
+- (NSString *) getBookIsbn {
     return str_bsnNum;
 }
 @end

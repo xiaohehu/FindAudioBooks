@@ -24,11 +24,16 @@
 
 @property (nonatomic, strong) UIView                *uiv_bookInfoContainer;
 @property (nonatomic, strong) UIImageView           *uiiv_cover;
-@property (nonatomic, strong) UILabel               *uil_bsn;
+@property (nonatomic, strong) UILabel               *uil_isbn;
 @property (nonatomic, strong) UILabel               *uil_title;
 @property (nonatomic, strong) FetchParseBookInfo    *fetcher;
 @property (nonatomic, strong) UIButton              *uib_fetchToggle;
 @property (nonatomic, strong) UIButton              *uib_searchAudible;
+
+@property (nonatomic, strong) UIView                *uiv_searchContainer;
+@property (nonatomic, strong) UIWebView             *uiw_searchView;
+@property (nonatomic, strong) UIView                *uiv_searchTopBar;
+@property (nonatomic, strong) UIButton              *uib_searchClose;
 
 @end
 
@@ -107,18 +112,18 @@
     [_uiiv_cover setBackgroundColor:[UIColor whiteColor]];
     [_uiv_bookInfoContainer addSubview: _uiiv_cover];
     
-    // Init book's BSN label
-    _uil_bsn = [[UILabel alloc] initWithFrame:CGRectMake(0.0,
+    // Init book's ISBN label
+    _uil_isbn = [[UILabel alloc] initWithFrame:CGRectMake(0.0,
                                                          _uiiv_cover.frame.size.height + padding,
                                                          _uiv_bookInfoContainer.frame.size.width,
                                                          bookInfoHeight)];
-    [_uil_bsn setBackgroundColor:[UIColor yellowColor]];
-    [_uil_bsn setTextAlignment:NSTextAlignmentCenter];
-    [_uiv_bookInfoContainer addSubview: _uil_bsn];
+    [_uil_isbn setBackgroundColor:[UIColor yellowColor]];
+    [_uil_isbn setTextAlignment:NSTextAlignmentCenter];
+    [_uiv_bookInfoContainer addSubview: _uil_isbn];
     
     // Init book's title label
     _uil_title = [[UILabel alloc] initWithFrame:CGRectMake(0.0,
-                                                           _uil_bsn.frame.origin.y + _uil_bsn.frame.size.height + padding,
+                                                           _uil_isbn.frame.origin.y + _uil_isbn.frame.size.height + padding,
                                                            _uiv_bookInfoContainer.frame.size.width,
                                                            bookInfoHeight)];
     [_uil_title setBackgroundColor:[UIColor greenColor]];
@@ -134,6 +139,7 @@
     [_uib_searchAudible setBackgroundColor:[UIColor orangeColor]];
     [_uib_searchAudible setTitle:@"Search in Audible" forState:UIControlStateNormal];
     [_uib_searchAudible.titleLabel setAdjustsFontSizeToFitWidth:true];
+    [_uib_searchAudible addTarget:self action:@selector(searchInAudible) forControlEvents:UIControlEventTouchUpInside];
     [_uiv_bookInfoContainer addSubview: _uib_searchAudible];
 }
 
@@ -151,6 +157,59 @@
     } else {
         [_session startRunning];
     }
+}
+
+- (void)searchInAudible {
+    if (_uil_title.text == nil) {
+        NSLog(@"=========");
+    } else {
+        [self initSearchWebView: _uil_title.text];
+    }
+}
+
+- (void)initSearchWebView: (NSString *)rawTitle {
+    _uiv_searchContainer = [[UIView alloc] initWithFrame:self.view.frame];
+    [_uiv_searchContainer setBackgroundColor:[UIColor redColor]];
+    
+    _uiv_searchTopBar = [[UIView alloc] initWithFrame:CGRectMake(0.0, 0.0, _uiv_searchContainer.frame.size.width, _uiv_searchContainer.frame.size.height * 0.1)];
+    [_uiv_searchTopBar setBackgroundColor:[UIColor whiteColor]];
+    
+    UIView *uiv_bottomBorder = [[UIView alloc] initWithFrame: CGRectMake(0.0, _uiv_searchTopBar.frame.size.height, _uiv_searchContainer.frame.size.width, 2.0)];
+    [uiv_bottomBorder setBackgroundColor:[UIColor orangeColor]];
+    
+    _uib_searchClose = [[UIButton alloc] initWithFrame:CGRectMake(_uiv_searchTopBar.frame.size.width * 0.75, 0.0, _uiv_searchTopBar.frame.size.width * 0.25, _uiv_searchTopBar.frame.size.height)];
+    [_uib_searchClose setTitle:@"CLOSE" forState:UIControlStateNormal];
+    [_uib_searchClose setTitleColor:[UIColor colorWithRed:36/255.0 green:71/255.0 blue:113/255.0 alpha:1.0] forState:UIControlStateNormal];
+    [_uib_searchClose setBackgroundColor:[UIColor whiteColor]];
+    [_uib_searchClose addTarget:self action:@selector(closeSearcWeb) forControlEvents:UIControlEventTouchUpInside];
+    
+    
+    _uiw_searchView = [[UIWebView alloc] initWithFrame:CGRectMake(0.0, _uiv_searchTopBar.frame.size.height, _uiv_searchContainer.frame.size.width, _uiv_searchContainer.frame.size.height - _uiv_searchTopBar.frame.size.height)];
+    [_uiw_searchView setBackgroundColor:[UIColor whiteColor]];
+    
+    // Pars raw title
+    NSString *title = [[rawTitle componentsSeparatedByString:@": "] objectAtIndex:1];
+    title = [title stringByReplacingOccurrencesOfString:@" " withString:@"%20"];
+    NSString *rawUrl = @"https://mobile.audible.com/search?keywords=";
+    NSURL *searchURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", rawUrl, title]];
+    NSLog(@"%@", searchURL);
+    NSURLRequest *searchRequest = [NSURLRequest requestWithURL: searchURL];
+    [_uiw_searchView loadRequest: searchRequest];
+    
+    [_uiv_searchContainer addSubview: _uiw_searchView];
+    [_uiv_searchTopBar addSubview: _uib_searchClose];
+    [_uiv_searchContainer addSubview: _uiv_searchTopBar];
+    [_uiv_searchContainer addSubview: uiv_bottomBorder];
+    [self.view addSubview:_uiv_searchContainer];
+}
+
+- (void)closeSearcWeb {
+    [_uiv_searchContainer removeFromSuperview];
+    _uiv_bookInfoContainer = nil;
+    [_uil_isbn setText:nil];
+    [_uil_title setText:nil];
+    [_uiiv_cover setImage:nil];
+    [_session startRunning];
 }
 
 - (void)captureOutput:(AVCaptureOutput *)captureOutput didOutputMetadataObjects:(NSArray *)metadataObjects fromConnection:(AVCaptureConnection *)connection
@@ -176,9 +235,9 @@
             NSLog(@"FIND THE BOOK: \n %@", detectionString);
             _fetcher = nil;
             _fetcher = [[FetchParseBookInfo alloc] init];
-            [_fetcher setBSN: detectionString];
+            [_fetcher setIsbn: detectionString];
             if ([_fetcher getBookInfo]) {
-                [_uil_bsn setText:[NSString stringWithFormat:@"%@: %@", @"BSN", [_fetcher getBookBSN]]];
+                [_uil_isbn setText:[NSString stringWithFormat:@"%@: %@", @"ISBN", [_fetcher getBookIsbn]]];
                 [_uil_title setText:[NSString stringWithFormat:@"%@: %@", @"Title", [_fetcher getBookTitle]]];
                 NSURL *url = [NSURL URLWithString:[_fetcher getCoverUrl]];
                 NSData *data = [NSData dataWithContentsOfURL:url];
