@@ -161,7 +161,7 @@
 
 - (void)searchInAudible {
     if (_uil_title.text == nil) {
-        NSLog(@"=========");
+        return;
     } else {
         [self initSearchWebView: _uil_title.text];
     }
@@ -205,11 +205,11 @@
 
 - (void)closeSearcWeb {
     [_uiv_searchContainer removeFromSuperview];
-    _uiv_bookInfoContainer = nil;
     [_uil_isbn setText:nil];
     [_uil_title setText:nil];
     [_uiiv_cover setImage:nil];
     [_session startRunning];
+    _uiv_searchContainer = nil;
 }
 
 - (void)captureOutput:(AVCaptureOutput *)captureOutput didOutputMetadataObjects:(NSArray *)metadataObjects fromConnection:(AVCaptureConnection *)connection
