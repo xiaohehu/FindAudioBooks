@@ -30,7 +30,7 @@
 		08813C1E2091777E005B55BD /* TabBarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 08813C1D2091777E005B55BD /* TabBarViewController.m */; };
 		08813C212098176D005B55BD /* FetchParseBookInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 08813C202098176D005B55BD /* FetchParseBookInfo.m */; };
 		08813C2A209FF8E2005B55BD /* DBManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 08813C29209FF8E2005B55BD /* DBManager.m */; };
-		08813C2C20A01027005B55BD /* bookdb.sql in Resources */ = {isa = PBXBuildFile; fileRef = 08813C2B20A01027005B55BD /* bookdb.sql */; };
+		08813C2E20A0180A005B55BD /* bookdb.sql in Resources */ = {isa = PBXBuildFile; fileRef = 08813C2D20A01809005B55BD /* bookdb.sql */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -88,7 +88,7 @@
 		08813C202098176D005B55BD /* FetchParseBookInfo.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FetchParseBookInfo.m; sourceTree = "<group>"; };
 		08813C28209FF8E2005B55BD /* DBManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DBManager.h; sourceTree = "<group>"; };
 		08813C29209FF8E2005B55BD /* DBManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DBManager.m; sourceTree = "<group>"; };
-		08813C2B20A01027005B55BD /* bookdb.sql */ = {isa = PBXFileReference; lastKnownFileType = file; path = bookdb.sql; sourceTree = "<group>"; };
+		08813C2D20A01809005B55BD /* bookdb.sql */ = {isa = PBXFileReference; lastKnownFileType = file; path = bookdb.sql; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -205,7 +205,7 @@
 		087852392084062A008C523E /* Assets */ = {
 			isa = PBXGroup;
 			children = (
-				08813C2B20A01027005B55BD /* bookdb.sql */,
+				08813C2D20A01809005B55BD /* bookdb.sql */,
 				0878523D20840643008C523E /* thumb1.jpg */,
 				0878523C20840643008C523E /* thumb2.jpg */,
 				0878523A20840643008C523E /* thumb3.jpg */,
@@ -318,7 +318,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0878523E20840644008C523E /* thumb3.jpg in Resources */,
-				08813C2C20A01027005B55BD /* bookdb.sql in Resources */,
+				08813C2E20A0180A005B55BD /* bookdb.sql in Resources */,
 				087852092083F5AC008C523E /* LaunchScreen.storyboard in Resources */,
 				087852062083F5AC008C523E /* Assets.xcassets in Resources */,
 				0878524020840644008C523E /* thumb2.jpg in Resources */,

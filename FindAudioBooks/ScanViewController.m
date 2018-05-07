@@ -9,18 +9,24 @@
 #import "ScanViewController.h"
 #import <AVFoundation/AVFoundation.h>
 #import "FetchParseBookInfo.h"
+#import "DBManager.h"
 
 @interface ScanViewController () <AVCaptureMetadataOutputObjectsDelegate> {
-    AVCaptureSession *_session;
-    AVCaptureDevice *_device;
-    AVCaptureDeviceInput *_input;
-    AVCaptureMetadataOutput *_output;
-    AVCaptureVideoPreviewLayer *_prevLayer;
+    AVCaptureSession                *_session;
+    AVCaptureDevice                 *_device;
+    AVCaptureDeviceInput            *_input;
+    AVCaptureMetadataOutput         *_output;
+    AVCaptureVideoPreviewLayer      *_prevLayer;
+    
+    NSString *str_imageURL;
+    NSString *str_bookTitle;
+    NSString *str_bookISBN;
     
     int viewBoundsWidth;
     int viewBoundsHeight;
     float videoSize;
 }
+@property (nonatomic, strong) DBManager             *dbManager;
 
 @property (nonatomic, strong) UIView                *uiv_bookInfoContainer;
 @property (nonatomic, strong) UIImageView           *uiiv_cover;
@@ -29,6 +35,7 @@
 @property (nonatomic, strong) FetchParseBookInfo    *fetcher;
 @property (nonatomic, strong) UIButton              *uib_fetchToggle;
 @property (nonatomic, strong) UIButton              *uib_searchAudible;
+@property (nonatomic, strong) UIButton              *uib_addBook;
 
 @property (nonatomic, strong) UIView                *uiv_searchContainer;
 @property (nonatomic, strong) UIWebView             *uiw_searchView;
@@ -55,6 +62,8 @@
     [self initBookInfoView];
     
     [self initFetchToggleButton];
+    
+    _dbManager = [[DBManager alloc] initWithDatabaseFilename:@"bookdb.sql"];
 }
 
 - (void) initVideoSession {
@@ -141,6 +150,14 @@
     [_uib_searchAudible.titleLabel setAdjustsFontSizeToFitWidth:true];
     [_uib_searchAudible addTarget:self action:@selector(searchInAudible) forControlEvents:UIControlEventTouchUpInside];
     [_uiv_bookInfoContainer addSubview: _uib_searchAudible];
+    
+    
+    _uib_addBook = [[UIButton alloc] initWithFrame:CGRectMake(0.0, _uib_searchAudible.frame.origin.y, _uib_searchAudible.frame.size.width, _uib_searchAudible.frame.size.height)];
+    [_uib_addBook setBackgroundColor:[UIColor orangeColor]];
+    [_uib_addBook setTitle:@"Add to Library" forState:UIControlStateNormal];
+    [_uib_addBook.titleLabel setAdjustsFontSizeToFitWidth: true];
+    [_uib_addBook addTarget:self action:@selector(addBookToDB) forControlEvents:UIControlEventTouchUpInside];
+    [_uiv_bookInfoContainer addSubview: _uib_addBook];
 }
 
 - (void) initFetchToggleButton {
@@ -160,10 +177,10 @@
 }
 
 - (void)searchInAudible {
-    if (_uil_title.text == nil) {
+    if (str_bookTitle == nil) {
         return;
     } else {
-        [self initSearchWebView: _uil_title.text];
+        [self initSearchWebView: str_bookTitle];
     }
 }
 
@@ -188,8 +205,7 @@
     [_uiw_searchView setBackgroundColor:[UIColor whiteColor]];
     
     // Pars raw title
-    NSString *title = [[rawTitle componentsSeparatedByString:@": "] objectAtIndex:1];
-    title = [title stringByReplacingOccurrencesOfString:@" " withString:@"%20"];
+    NSString *title = [rawTitle stringByReplacingOccurrencesOfString:@" " withString:@"%20"];
     NSString *rawUrl = @"https://mobile.audible.com/search?keywords=";
     NSURL *searchURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", rawUrl, title]];
     NSLog(@"%@", searchURL);
@@ -210,6 +226,29 @@
     [_uiiv_cover setImage:nil];
     [_session startRunning];
     _uiv_searchContainer = nil;
+}
+
+- (void)addBookToDB {
+    if (str_bookTitle == nil) {
+        return;
+    } else {
+        // Prepare the query string.
+        NSString *query = [NSString stringWithFormat:@"insert into bookInfo values(null, '%@', '%@', %@)", str_bookTitle, str_imageURL, str_bookISBN];
+        
+        // Execute the query.
+        [self.dbManager executeQuery:query];
+        
+        // If the query was successfully executed then pop the view controller.
+        if (self.dbManager.affectedRows != 0) {
+            NSLog(@"Query was executed successfully. Affected rows = %d", self.dbManager.affectedRows);
+            
+            // Pop the view controller.
+            [self.navigationController popViewControllerAnimated:YES];
+        }
+        else{
+            NSLog(@"Could not execute the query.");
+        }
+    }
 }
 
 - (void)captureOutput:(AVCaptureOutput *)captureOutput didOutputMetadataObjects:(NSArray *)metadataObjects fromConnection:(AVCaptureConnection *)connection
@@ -237,8 +276,14 @@
             _fetcher = [[FetchParseBookInfo alloc] init];
             [_fetcher setIsbn: detectionString];
             if ([_fetcher getBookInfo]) {
-                [_uil_isbn setText:[NSString stringWithFormat:@"%@: %@", @"ISBN", [_fetcher getBookIsbn]]];
-                [_uil_title setText:[NSString stringWithFormat:@"%@: %@", @"Title", [_fetcher getBookTitle]]];
+                str_imageURL = nil;
+                str_imageURL = [_fetcher getCoverUrl];
+                str_bookISBN = nil;
+                str_bookISBN = [_fetcher getBookIsbn];
+                str_bookTitle = nil;
+                str_bookTitle = [_fetcher getBookTitle];
+                [_uil_isbn setText:[NSString stringWithFormat:@"%@: %@", @"ISBN", str_bookISBN]];
+                [_uil_title setText:[NSString stringWithFormat:@"%@: %@", @"Title", str_bookTitle]];
                 NSURL *url = [NSURL URLWithString:[_fetcher getCoverUrl]];
                 NSData *data = [NSData dataWithContentsOfURL:url];
                 UIImage *uii_cover = [[UIImage alloc] initWithData:data];
