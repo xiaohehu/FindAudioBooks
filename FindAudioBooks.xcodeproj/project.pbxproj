@@ -17,10 +17,6 @@
 		087852212083F5AC008C523E /* FindAudioBooksUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 087852202083F5AC008C523E /* FindAudioBooksUITests.m */; };
 		087852332083F89B008C523E /* LibraryCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 087852322083F89B008C523E /* LibraryCollectionViewController.m */; };
 		087852382083FDC6008C523E /* libsqlite3.0.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 087852372083FDC6008C523E /* libsqlite3.0.tbd */; };
-		0878523E20840644008C523E /* thumb3.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 0878523A20840643008C523E /* thumb3.jpg */; };
-		0878523F20840644008C523E /* thumb4.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 0878523B20840643008C523E /* thumb4.jpg */; };
-		0878524020840644008C523E /* thumb2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 0878523C20840643008C523E /* thumb2.jpg */; };
-		0878524120840644008C523E /* thumb1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 0878523D20840643008C523E /* thumb1.jpg */; };
 		08785243208D0B65008C523E /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08785242208D0B65008C523E /* CoreGraphics.framework */; };
 		08785246208D0B80008C523E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08785244208D0B80008C523E /* Foundation.framework */; };
 		08785247208D0B80008C523E /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08785245208D0B80008C523E /* AVFoundation.framework */; };
@@ -31,6 +27,7 @@
 		08813C212098176D005B55BD /* FetchParseBookInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 08813C202098176D005B55BD /* FetchParseBookInfo.m */; };
 		08813C2A209FF8E2005B55BD /* DBManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 08813C29209FF8E2005B55BD /* DBManager.m */; };
 		08813C2E20A0180A005B55BD /* bookdb.sql in Resources */ = {isa = PBXBuildFile; fileRef = 08813C2D20A01809005B55BD /* bookdb.sql */; };
+		08CAAE9220A16B4000A6891A /* thumb.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 08CAAE9120A16B4000A6891A /* thumb.jpg */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -71,10 +68,6 @@
 		087852322083F89B008C523E /* LibraryCollectionViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LibraryCollectionViewController.m; sourceTree = "<group>"; };
 		087852352083FB24008C523E /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
 		087852372083FDC6008C523E /* libsqlite3.0.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.0.tbd; path = usr/lib/libsqlite3.0.tbd; sourceTree = SDKROOT; };
-		0878523A20840643008C523E /* thumb3.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = thumb3.jpg; sourceTree = "<group>"; };
-		0878523B20840643008C523E /* thumb4.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = thumb4.jpg; sourceTree = "<group>"; };
-		0878523C20840643008C523E /* thumb2.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = thumb2.jpg; sourceTree = "<group>"; };
-		0878523D20840643008C523E /* thumb1.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = thumb1.jpg; sourceTree = "<group>"; };
 		08785242208D0B65008C523E /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		08785244208D0B80008C523E /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		08785245208D0B80008C523E /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
@@ -89,6 +82,7 @@
 		08813C28209FF8E2005B55BD /* DBManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DBManager.h; sourceTree = "<group>"; };
 		08813C29209FF8E2005B55BD /* DBManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DBManager.m; sourceTree = "<group>"; };
 		08813C2D20A01809005B55BD /* bookdb.sql */ = {isa = PBXFileReference; lastKnownFileType = file; path = bookdb.sql; sourceTree = "<group>"; };
+		08CAAE9120A16B4000A6891A /* thumb.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = thumb.jpg; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -206,10 +200,7 @@
 			isa = PBXGroup;
 			children = (
 				08813C2D20A01809005B55BD /* bookdb.sql */,
-				0878523D20840643008C523E /* thumb1.jpg */,
-				0878523C20840643008C523E /* thumb2.jpg */,
-				0878523A20840643008C523E /* thumb3.jpg */,
-				0878523B20840643008C523E /* thumb4.jpg */,
+				08CAAE9120A16B4000A6891A /* thumb.jpg */,
 			);
 			path = Assets;
 			sourceTree = "<group>";
@@ -317,14 +308,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0878523E20840644008C523E /* thumb3.jpg in Resources */,
+				08CAAE9220A16B4000A6891A /* thumb.jpg in Resources */,
 				08813C2E20A0180A005B55BD /* bookdb.sql in Resources */,
 				087852092083F5AC008C523E /* LaunchScreen.storyboard in Resources */,
 				087852062083F5AC008C523E /* Assets.xcassets in Resources */,
-				0878524020840644008C523E /* thumb2.jpg in Resources */,
-				0878524120840644008C523E /* thumb1.jpg in Resources */,
 				087852042083F5A9008C523E /* Main.storyboard in Resources */,
-				0878523F20840644008C523E /* thumb4.jpg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -34,7 +34,7 @@
 
     // Init all ViewControllers
     UICollectionViewFlowLayout *aFlowLayout = [[UICollectionViewFlowLayout alloc] init];
-    [aFlowLayout setItemSize:CGSizeMake(100, 100)];
+    [aFlowLayout setItemSize:CGSizeMake(110, 150)];
     [aFlowLayout setScrollDirection:UICollectionViewScrollDirectionVertical];
     self.libraryVC = [[LibraryCollectionViewController alloc] initWithCollectionViewLayout:aFlowLayout];
     self.scannerVC = [[ScanViewController alloc] init];

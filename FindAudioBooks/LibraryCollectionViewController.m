@@ -10,7 +10,6 @@
 #import "DBManager.h"
 
 @interface LibraryCollectionViewController () {
-    NSArray *array_imageArray;
     NSInteger indexImage;
     NSInteger indexTitle;
 }
@@ -25,7 +24,6 @@
 static NSString * const reuseIdentifier = @"Cell";
 
 - (void)prepareData {
-    array_imageArray = @[@"thumb1.jpg", @"thumb2.jpg", @"thumb3.jpg", @"thumb4.jpg"];
     self.dbManager = [[DBManager alloc] initWithDatabaseFilename:@"bookdb.sql"];
     NSString *query = @"select * from bookInfo";
     // Get the results.
@@ -96,11 +94,24 @@ static NSString * const reuseIdentifier = @"Cell";
     // Configure the cell
     NSURL *url = [NSURL URLWithString:[[_arr_bookInfo objectAtIndex: indexPath.row] objectAtIndex: indexImage]];
     NSData *data = [NSData dataWithContentsOfURL:url];
-    UIImage *uii_thumb = [[UIImage alloc] initWithData:data];
-    UIImageView *uiiv_cellThumb = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, cell.bounds.size.width, cell.bounds.size.height)];
+    UIImage *uii_thumb = nil;
+    if (data == nil) {
+        uii_thumb = [UIImage imageNamed:@"thumb.jpg"];
+    } else {
+        uii_thumb = [[UIImage alloc] initWithData:data];
+    }
+    UIImageView *uiiv_cellThumb = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, cell.bounds.size.width, cell.bounds.size.height * 0.7)];
     [uiiv_cellThumb setImage:uii_thumb];
     [uiiv_cellThumb setContentMode: UIViewContentModeScaleAspectFit];
+    UILabel *uil_title = [[UILabel alloc] initWithFrame:CGRectMake(0.0, cell.bounds.size.height * 0.7, cell.bounds.size.width, cell.bounds.size.height * 0.3)];
+    [uil_title setText:[[_arr_bookInfo objectAtIndex: indexPath.row] objectAtIndex: indexTitle]];
+    [uil_title setTextAlignment: NSTextAlignmentCenter];
+    uil_title.numberOfLines = 0;
+    uil_title.font = [UIFont fontWithName:@"Helvetica Neue" size:11.0];
+    [cell.contentView addSubview: uil_title];
     [cell.contentView addSubview:uiiv_cellThumb];
+    cell.layer.borderColor = [UIColor orangeColor].CGColor;
+    cell.layer.borderWidth = 2.0;
     return cell;
 }
 
