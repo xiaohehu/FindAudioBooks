@@ -10,4 +10,6 @@
 
 @interface LibraryCollectionViewController : UICollectionViewController
 
+- (void)prepareData;
+
 @end

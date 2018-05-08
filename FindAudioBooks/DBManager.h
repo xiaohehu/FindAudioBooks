@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import <sqlite3.h>
-
+//CREATE TABLE bookInfo(bookINFOID integer primary key, title text, imageLink text, isbn text);
 @interface DBManager : NSObject
 
 @property (nonatomic, strong) NSString *documentsDirectory;

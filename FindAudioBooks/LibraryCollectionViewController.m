@@ -7,10 +7,16 @@
 //
 
 #import "LibraryCollectionViewController.h"
+#import "DBManager.h"
 
 @interface LibraryCollectionViewController () {
     NSArray *array_imageArray;
+    NSInteger indexImage;
+    NSInteger indexTitle;
 }
+
+@property (nonatomic, strong) DBManager         *dbManager;
+@property (nonatomic, strong) NSArray           *arr_bookInfo;
 
 @end
 
@@ -20,11 +26,29 @@ static NSString * const reuseIdentifier = @"Cell";
 
 - (void)prepareData {
     array_imageArray = @[@"thumb1.jpg", @"thumb2.jpg", @"thumb3.jpg", @"thumb4.jpg"];
+    self.dbManager = [[DBManager alloc] initWithDatabaseFilename:@"bookdb.sql"];
+    NSString *query = @"select * from bookInfo";
+    // Get the results.
+    if (self.arr_bookInfo != nil) {
+        self.arr_bookInfo = nil;
+    }
+    self.arr_bookInfo = [[NSArray alloc] initWithArray:[self.dbManager loadDataFromDB:query]];
+    indexTitle = [self.dbManager.arrColumnNames indexOfObject:@"title"];
+    indexImage = [self.dbManager.arrColumnNames indexOfObject:@"imageLink"];
+
+    // Reload the table view.
+    [self.collectionView reloadData];
+}
+
+- (void) viewDidAppear:(BOOL)animated {
+    [self prepareData];
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title = @"Library";
+    self.collectionView.delegate = self;
+    self.collectionView.dataSource = self;
     [self prepareData];
     // Uncomment the following line to preserve selection between presentations
     // self.clearsSelectionOnViewWillAppear = NO;
@@ -62,8 +86,7 @@ static NSString * const reuseIdentifier = @"Cell";
 
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    int num_cellsCount = (int) array_imageArray.count;
-    return 20;
+    return _arr_bookInfo.count;
 //    return 0;
 }
 
@@ -71,16 +94,13 @@ static NSString * const reuseIdentifier = @"Cell";
     UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:reuseIdentifier forIndexPath:indexPath];
     
     // Configure the cell
-    if (indexPath.item <= 3) {
-        NSString *str_imageName = [array_imageArray objectAtIndex:(int)indexPath.item];
-        UIImage *uii_thumb = [UIImage imageNamed:str_imageName];
-        UIImageView *uiiv_cellThumb = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, cell.bounds.size.width, cell.bounds.size.height)];
-        [uiiv_cellThumb setImage:uii_thumb];
-        [cell.contentView addSubview:uiiv_cellThumb];
-        [cell.contentView setBackgroundColor:[UIColor greenColor]];
-    } else {
-        [cell.contentView setBackgroundColor:[UIColor redColor]];
-    }
+    NSURL *url = [NSURL URLWithString:[[_arr_bookInfo objectAtIndex: indexPath.row] objectAtIndex: indexImage]];
+    NSData *data = [NSData dataWithContentsOfURL:url];
+    UIImage *uii_thumb = [[UIImage alloc] initWithData:data];
+    UIImageView *uiiv_cellThumb = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, cell.bounds.size.width, cell.bounds.size.height)];
+    [uiiv_cellThumb setImage:uii_thumb];
+    [uiiv_cellThumb setContentMode: UIViewContentModeScaleAspectFit];
+    [cell.contentView addSubview:uiiv_cellThumb];
     return cell;
 }
 
