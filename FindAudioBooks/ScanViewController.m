@@ -108,7 +108,7 @@
                                                         _prevLayer.frame.origin.y + _prevLayer.frame.size.height + topPad,
                                                         self.view.frame.size.width,
                                                            self.view.frame.size.height - _prevLayer.frame.origin.y - _prevLayer.frame.size.height - bottomPad)];
-    [_uiv_bookInfoContainer setBackgroundColor:[UIColor redColor]];
+    [_uiv_bookInfoContainer setBackgroundColor:[UIColor clearColor]];
     padding = _uiv_bookInfoContainer.frame.size.height * 0.1 / 2.0;
     bookInfoHeight = _uiv_bookInfoContainer.frame.size.height * bookInfoPercentage;
     [self.view addSubview:_uiv_bookInfoContainer];
@@ -126,7 +126,7 @@
                                                          _uiiv_cover.frame.size.height + padding,
                                                          _uiv_bookInfoContainer.frame.size.width,
                                                          bookInfoHeight)];
-    [_uil_isbn setBackgroundColor:[UIColor yellowColor]];
+    [_uil_isbn setBackgroundColor:[UIColor clearColor]];
     [_uil_isbn setTextAlignment:NSTextAlignmentCenter];
     [_uiv_bookInfoContainer addSubview: _uil_isbn];
     
@@ -135,7 +135,7 @@
                                                            _uil_isbn.frame.origin.y + _uil_isbn.frame.size.height + padding,
                                                            _uiv_bookInfoContainer.frame.size.width,
                                                            bookInfoHeight)];
-    [_uil_title setBackgroundColor:[UIColor greenColor]];
+    [_uil_title setBackgroundColor:[UIColor clearColor]];
     [_uil_title setTextAlignment:NSTextAlignmentCenter];
     [_uiv_bookInfoContainer addSubview: _uil_title];
     
@@ -150,6 +150,7 @@
     [_uib_searchAudible.titleLabel setAdjustsFontSizeToFitWidth:true];
     [_uib_searchAudible addTarget:self action:@selector(searchInAudible) forControlEvents:UIControlEventTouchUpInside];
     [_uiv_bookInfoContainer addSubview: _uib_searchAudible];
+    _uib_searchAudible.hidden = YES;
     
     
     _uib_addBook = [[UIButton alloc] initWithFrame:CGRectMake(0.0, _uib_searchAudible.frame.origin.y, _uib_searchAudible.frame.size.width, _uib_searchAudible.frame.size.height)];
@@ -158,6 +159,7 @@
     [_uib_addBook.titleLabel setAdjustsFontSizeToFitWidth: true];
     [_uib_addBook addTarget:self action:@selector(addBookToDB) forControlEvents:UIControlEventTouchUpInside];
     [_uiv_bookInfoContainer addSubview: _uib_addBook];
+    _uib_addBook.hidden = YES;
 }
 
 - (void) initFetchToggleButton {
@@ -173,6 +175,8 @@
         return;
     } else {
         [_session startRunning];
+        _uib_searchAudible.hidden = YES;
+        _uib_addBook.hidden = YES;
     }
 }
 
@@ -186,7 +190,7 @@
 
 - (void)initSearchWebView: (NSString *)rawTitle {
     _uiv_searchContainer = [[UIView alloc] initWithFrame:self.view.frame];
-    [_uiv_searchContainer setBackgroundColor:[UIColor redColor]];
+    [_uiv_searchContainer setBackgroundColor:[UIColor whiteColor]];
     
     _uiv_searchTopBar = [[UIView alloc] initWithFrame:CGRectMake(0.0, 0.0, _uiv_searchContainer.frame.size.width, _uiv_searchContainer.frame.size.height * 0.1)];
     [_uiv_searchTopBar setBackgroundColor:[UIColor whiteColor]];
@@ -226,6 +230,8 @@
     [_uiiv_cover setImage:nil];
     [_session startRunning];
     _uiv_searchContainer = nil;
+    _uib_searchAudible.hidden = YES;
+    _uib_addBook.hidden = YES;
 }
 
 - (void)addBookToDB {
@@ -290,6 +296,8 @@
                 [_uiiv_cover setImage: uii_cover];
                 [_uiiv_cover setContentMode: UIViewContentModeScaleAspectFit];
                 [_session stopRunning];
+                _uib_searchAudible.hidden = NO;
+                _uib_addBook.hidden = NO;
             } else {
                 [_session stopRunning];
                 UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Errow With Finding Book"
