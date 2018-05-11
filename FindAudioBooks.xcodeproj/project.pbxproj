@@ -28,6 +28,7 @@
 		08813C2A209FF8E2005B55BD /* DBManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 08813C29209FF8E2005B55BD /* DBManager.m */; };
 		08813C2E20A0180A005B55BD /* bookdb.sql in Resources */ = {isa = PBXBuildFile; fileRef = 08813C2D20A01809005B55BD /* bookdb.sql */; };
 		08CAAE9220A16B4000A6891A /* thumb.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 08CAAE9120A16B4000A6891A /* thumb.jpg */; };
+		08CAAE9520A57B3700A6891A /* BookCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 08CAAE9420A57B3700A6891A /* BookCell.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -83,6 +84,8 @@
 		08813C29209FF8E2005B55BD /* DBManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DBManager.m; sourceTree = "<group>"; };
 		08813C2D20A01809005B55BD /* bookdb.sql */ = {isa = PBXFileReference; lastKnownFileType = file; path = bookdb.sql; sourceTree = "<group>"; };
 		08CAAE9120A16B4000A6891A /* thumb.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = thumb.jpg; sourceTree = "<group>"; };
+		08CAAE9320A57B3700A6891A /* BookCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BookCell.h; sourceTree = "<group>"; };
+		08CAAE9420A57B3700A6891A /* BookCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BookCell.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -150,6 +153,8 @@
 				087852322083F89B008C523E /* LibraryCollectionViewController.m */,
 				0878524C208D1328008C523E /* ScanViewController.h */,
 				0878524D208D1328008C523E /* ScanViewController.m */,
+				08CAAE9320A57B3700A6891A /* BookCell.h */,
+				08CAAE9420A57B3700A6891A /* BookCell.m */,
 				08813C28209FF8E2005B55BD /* DBManager.h */,
 				08813C29209FF8E2005B55BD /* DBManager.m */,
 				08813C1F2098176D005B55BD /* FetchParseBookInfo.h */,
@@ -341,6 +346,7 @@
 				087852332083F89B008C523E /* LibraryCollectionViewController.m in Sources */,
 				0878524E208D1328008C523E /* ScanViewController.m in Sources */,
 				087852012083F5A9008C523E /* ViewController.m in Sources */,
+				08CAAE9520A57B3700A6891A /* BookCell.m in Sources */,
 				0878520C2083F5AC008C523E /* main.m in Sources */,
 				08813C1E2091777E005B55BD /* TabBarViewController.m in Sources */,
 				087851FE2083F5A9008C523E /* AppDelegate.m in Sources */,

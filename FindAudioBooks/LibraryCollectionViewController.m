@@ -8,6 +8,7 @@
 
 #import "LibraryCollectionViewController.h"
 #import "DBManager.h"
+#import "BookCell.h"
 
 @interface LibraryCollectionViewController () {
     NSInteger indexImage;
@@ -33,7 +34,7 @@ static NSString * const reuseIdentifier = @"Cell";
     self.arr_bookInfo = [[NSArray alloc] initWithArray:[self.dbManager loadDataFromDB:query]];
     indexTitle = [self.dbManager.arrColumnNames indexOfObject:@"title"];
     indexImage = [self.dbManager.arrColumnNames indexOfObject:@"imageLink"];
-
+    
     // Reload the table view.
     [self.collectionView reloadData];
 }
@@ -52,7 +53,7 @@ static NSString * const reuseIdentifier = @"Cell";
     // self.clearsSelectionOnViewWillAppear = NO;
     
     // Register cell classes
-    [self.collectionView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:reuseIdentifier];
+    [self.collectionView registerClass:[BookCell class] forCellWithReuseIdentifier:reuseIdentifier];
     self.collectionView.backgroundColor = [UIColor clearColor];
     // Do any additional setup after loading the view.
 }
@@ -89,29 +90,12 @@ static NSString * const reuseIdentifier = @"Cell";
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
-    UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:reuseIdentifier forIndexPath:indexPath];
-    
+    BookCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:reuseIdentifier forIndexPath:indexPath];
+
     // Configure the cell
-    NSURL *url = [NSURL URLWithString:[[_arr_bookInfo objectAtIndex: indexPath.row] objectAtIndex: indexImage]];
-    NSData *data = [NSData dataWithContentsOfURL:url];
-    UIImage *uii_thumb = nil;
-    if (data == nil) {
-        uii_thumb = [UIImage imageNamed:@"thumb.jpg"];
-    } else {
-        uii_thumb = [[UIImage alloc] initWithData:data];
-    }
-    UIImageView *uiiv_cellThumb = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, cell.bounds.size.width, cell.bounds.size.height * 0.7)];
-    [uiiv_cellThumb setImage:uii_thumb];
-    [uiiv_cellThumb setContentMode: UIViewContentModeScaleAspectFit];
-    UILabel *uil_title = [[UILabel alloc] initWithFrame:CGRectMake(0.0, cell.bounds.size.height * 0.7, cell.bounds.size.width, cell.bounds.size.height * 0.3)];
-    [uil_title setText:[[_arr_bookInfo objectAtIndex: indexPath.row] objectAtIndex: indexTitle]];
-    [uil_title setTextAlignment: NSTextAlignmentCenter];
-    uil_title.numberOfLines = 0;
-    uil_title.font = [UIFont fontWithName:@"Helvetica Neue" size:11.0];
-    [cell.contentView addSubview: uil_title];
-    [cell.contentView addSubview:uiiv_cellThumb];
-    cell.layer.borderColor = [UIColor orangeColor].CGColor;
-    cell.layer.borderWidth = 2.0;
+    cell.str_bookTitle = [[_arr_bookInfo objectAtIndex: indexPath.row] objectAtIndex: indexTitle];
+    cell.str_imageURL = [[_arr_bookInfo objectAtIndex: indexPath.row] objectAtIndex: indexImage];
+    [cell setContent];
     return cell;
 }
 
