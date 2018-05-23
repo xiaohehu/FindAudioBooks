@@ -181,7 +181,17 @@
     if (str_bookTitle == nil) {
         return;
     } else {
-        [self initSearchWebView: str_bookTitle];
+        
+        NSMutableString *modi_title = [NSMutableString stringWithString:str_bookTitle];
+        if ([str_bookTitle containsString:@"'"]) {
+            NSInteger index = [str_bookTitle rangeOfString:@"'"].location;
+            [modi_title replaceCharactersInRange:NSMakeRange(index, 1) withString:@""];
+        }
+        else if ([str_bookTitle containsString:@", Or,"]) {
+            NSInteger index = [str_bookTitle rangeOfString:@", Or"].location;
+            modi_title = [modi_title substringWithRange:NSMakeRange(0, index)];
+        }
+        [self initSearchWebView: modi_title];
     }
 }
 
@@ -217,6 +227,10 @@
             NSInteger index = [str_bookTitle rangeOfString:@"'"].location;
             [modi_title replaceCharactersInRange:NSMakeRange(index, 1) withString:@""];
         }
+        else if ([str_bookTitle containsString:@", Or,"]) {
+            NSInteger index = [str_bookTitle rangeOfString:@", Or"].location;
+            modi_title = [modi_title substringWithRange:NSMakeRange(0, index)];
+        }
         // De-dup books
         NSString *query_check = [NSString stringWithFormat:@"select * from bookInfo where isbn == %@", str_bookISBN];
         NSArray *arr_existing = [[NSArray alloc] initWithArray:[self.dbManager loadDataFromDB:query_check]];
@@ -240,24 +254,43 @@
             query_check = nil;
             arr_existing = nil;
             return;
-        }
-        
-        
-        NSString *query = [NSString stringWithFormat:@"insert into bookInfo values(null, '%@', '%@', %@)", modi_title, str_imageURL, str_bookISBN];
-        NSLog(@"\n\n\n %@", query);
-        // Execute the query.
-        [self.dbManager executeQuery:query];
-        
-        // If the query was successfully executed then pop the view controller.
-        if (self.dbManager.affectedRows != 0) {
-            NSLog(@"Query was executed successfully. Affected rows = %d", self.dbManager.affectedRows);
+        } else {
             
-            // Pop the view controller.
-            [self.navigationController popViewControllerAnimated:YES];
+            NSString *query = [NSString stringWithFormat:@"insert into bookInfo values(null, '%@', '%@', %@)", modi_title, str_imageURL, str_bookISBN];
+            NSLog(@"\n\n\n %@", query);
+            // Execute the query.
+            [self.dbManager executeQuery:query];
+            
+            // If the query was successfully executed then pop the view controller.
+            if (self.dbManager.affectedRows != 0) {
+                NSLog(@"Query was executed successfully. Affected rows = %d", self.dbManager.affectedRows);
+                UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Book is Added"
+                                                                                         message:@"This book is added to your library"
+                                                                                  preferredStyle:UIAlertControllerStyleAlert];
+                //We add buttons to the alert controller by creating UIAlertActions:
+                UIAlertAction *actionOk = [UIAlertAction actionWithTitle:@"Ok"
+                                                                   style:UIAlertActionStyleDefault
+                                                                 handler:^(UIAlertAction * action) {
+                                                                     [_session startRunning];
+                                                                     self.uib_searchAudible.hidden = YES;
+                                                                     self.uib_addBook.hidden = YES;
+                                                                     [self.uil_isbn setText:nil];
+                                                                     [self.uil_title setText:nil];
+                                                                     [self.uiiv_cover setImage:nil];
+                                                                 }];
+                [alertController addAction:actionOk];
+                [self presentViewController:alertController animated:YES completion:nil];
+                query_check = nil;
+                arr_existing = nil;
+            }
+            else{
+                NSLog(@"Could not execute the query.");
+            }
+            
         }
-        else{
-            NSLog(@"Could not execute the query.");
-        }
+        
+        
+
     }
 }
 

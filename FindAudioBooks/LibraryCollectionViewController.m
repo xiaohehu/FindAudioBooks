@@ -9,14 +9,16 @@
 #import "LibraryCollectionViewController.h"
 #import "DBManager.h"
 #import "BookCell.h"
+#import "SearchWebView.h"
 
-@interface LibraryCollectionViewController () {
+@interface LibraryCollectionViewController () <SearchWebViewDelegate> {
     NSInteger indexImage;
     NSInteger indexTitle;
 }
 
 @property (nonatomic, strong) DBManager         *dbManager;
 @property (nonatomic, strong) NSArray           *arr_bookInfo;
+@property (nonatomic, strong) SearchWebView     *searchWeb;
 
 @end
 
@@ -97,6 +99,19 @@ static NSString * const reuseIdentifier = @"Cell";
     cell.str_imageURL = [[_arr_bookInfo objectAtIndex: indexPath.row] objectAtIndex: indexImage];
     [cell setContent];
     return cell;
+}
+
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+    NSString *bookTitle = [[_arr_bookInfo objectAtIndex: indexPath.row] objectAtIndex:indexTitle];
+    self.searchWeb = [[SearchWebView alloc] initWithFrame:self.view.frame andTitle: bookTitle];
+    self.searchWeb.delegate = self;
+    [self.view addSubview: self.searchWeb];
+    bookTitle = nil;
+}
+
+- (void)didSearchWebViewRemoved:(SearchWebView *)searchView {
+    [self.searchWeb removeFromSuperview];
+    self.searchWeb = nil;
 }
 
 #pragma mark <UICollectionViewDelegate>
