@@ -239,8 +239,14 @@
         return;
     } else {
         // Prepare the query string.
-        NSString *query = [NSString stringWithFormat:@"insert into bookInfo values(null, '%@', '%@', %@)", str_bookTitle, str_imageURL, str_bookISBN];
+        NSMutableString *modi_title = [NSMutableString stringWithString:str_bookTitle];
+        if ([str_bookTitle containsString:@"'"]) {
+            NSInteger index = [str_bookTitle rangeOfString:@"'"].location;
+            [modi_title replaceCharactersInRange:NSMakeRange(index, 1) withString:@""];
+        }
         
+        NSString *query = [NSString stringWithFormat:@"insert into bookInfo values(null, '%@', '%@', %@)", modi_title, str_imageURL, str_bookISBN];
+        NSLog(@"\n\n\n %@", query);
         // Execute the query.
         [self.dbManager executeQuery:query];
         
