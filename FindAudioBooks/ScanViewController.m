@@ -10,8 +10,9 @@
 #import <AVFoundation/AVFoundation.h>
 #import "FetchParseBookInfo.h"
 #import "DBManager.h"
+#import "SearchWebView.h"
 
-@interface ScanViewController () <AVCaptureMetadataOutputObjectsDelegate> {
+@interface ScanViewController () <AVCaptureMetadataOutputObjectsDelegate, SearchWebViewDelegate> {
     AVCaptureSession                *_session;
     AVCaptureDevice                 *_device;
     AVCaptureDeviceInput            *_input;
@@ -37,11 +38,7 @@
 @property (nonatomic, strong) UIButton              *uib_searchAudible;
 @property (nonatomic, strong) UIButton              *uib_addBook;
 
-@property (nonatomic, strong) UIView                *uiv_searchContainer;
-@property (nonatomic, strong) UIWebView             *uiw_searchView;
-@property (nonatomic, strong) UIView                *uiv_searchTopBar;
-@property (nonatomic, strong) UIButton              *uib_searchClose;
-
+@property (nonatomic, strong) SearchWebView         *searchWeb;
 @end
 
 @implementation ScanViewController
@@ -189,47 +186,23 @@
 }
 
 - (void)initSearchWebView: (NSString *)rawTitle {
-    _uiv_searchContainer = [[UIView alloc] initWithFrame:self.view.frame];
-    [_uiv_searchContainer setBackgroundColor:[UIColor whiteColor]];
     
-    _uiv_searchTopBar = [[UIView alloc] initWithFrame:CGRectMake(0.0, 0.0, _uiv_searchContainer.frame.size.width, _uiv_searchContainer.frame.size.height * 0.1)];
-    [_uiv_searchTopBar setBackgroundColor:[UIColor whiteColor]];
-    
-    UIView *uiv_bottomBorder = [[UIView alloc] initWithFrame: CGRectMake(0.0, _uiv_searchTopBar.frame.size.height, _uiv_searchContainer.frame.size.width, 2.0)];
-    [uiv_bottomBorder setBackgroundColor:[UIColor orangeColor]];
-    
-    _uib_searchClose = [[UIButton alloc] initWithFrame:CGRectMake(_uiv_searchTopBar.frame.size.width * 0.75, 0.0, _uiv_searchTopBar.frame.size.width * 0.25, _uiv_searchTopBar.frame.size.height)];
-    [_uib_searchClose setTitle:@"CLOSE" forState:UIControlStateNormal];
-    [_uib_searchClose setTitleColor:[UIColor colorWithRed:36/255.0 green:71/255.0 blue:113/255.0 alpha:1.0] forState:UIControlStateNormal];
-    [_uib_searchClose setBackgroundColor:[UIColor whiteColor]];
-    [_uib_searchClose addTarget:self action:@selector(closeSearcWeb) forControlEvents:UIControlEventTouchUpInside];
-    
-    
-    _uiw_searchView = [[UIWebView alloc] initWithFrame:CGRectMake(0.0, _uiv_searchTopBar.frame.size.height, _uiv_searchContainer.frame.size.width, _uiv_searchContainer.frame.size.height - _uiv_searchTopBar.frame.size.height)];
-    [_uiw_searchView setBackgroundColor:[UIColor whiteColor]];
-    
-    // Pars raw title
-    NSString *title = [rawTitle stringByReplacingOccurrencesOfString:@" " withString:@"%20"];
-    NSString *rawUrl = @"https://mobile.audible.com/search?keywords=";
-    NSURL *searchURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", rawUrl, title]];
-    NSLog(@"%@", searchURL);
-    NSURLRequest *searchRequest = [NSURLRequest requestWithURL: searchURL];
-    [_uiw_searchView loadRequest: searchRequest];
-    
-    [_uiv_searchContainer addSubview: _uiw_searchView];
-    [_uiv_searchTopBar addSubview: _uib_searchClose];
-    [_uiv_searchContainer addSubview: _uiv_searchTopBar];
-    [_uiv_searchContainer addSubview: uiv_bottomBorder];
-    [self.view addSubview:_uiv_searchContainer];
+    self.searchWeb = [[SearchWebView alloc] initWithFrame:self.view.frame andTitle:rawTitle];
+    [self.view addSubview: self.searchWeb];
+    self.searchWeb.delegate = self;
+}
+
+- (void) didSearchWebViewRemoved:(SearchWebView *)searchView {
+    [self closeSearcWeb];
 }
 
 - (void)closeSearcWeb {
-    [_uiv_searchContainer removeFromSuperview];
+    [self.searchWeb removeFromSuperview];
+    self.searchWeb = nil;
     [_uil_isbn setText:nil];
     [_uil_title setText:nil];
     [_uiiv_cover setImage:nil];
     [_session startRunning];
-    _uiv_searchContainer = nil;
     _uib_searchAudible.hidden = YES;
     _uib_addBook.hidden = YES;
 }
@@ -353,8 +326,8 @@
     [_uil_title setText:nil];
     [_uiiv_cover setImage:nil];
     [_session startRunning];
-    [_uiv_searchContainer removeFromSuperview];
-    _uiv_searchContainer = nil;
+    [self.searchWeb removeFromSuperview];
+    self.searchWeb = nil;
     _uib_addBook.hidden = YES;
     _uib_searchAudible.hidden = YES;
 }

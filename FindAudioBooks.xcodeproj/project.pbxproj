@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		080C892020B51D9F008CF76A /* SearchWebView.m in Sources */ = {isa = PBXBuildFile; fileRef = 080C891F20B51D9F008CF76A /* SearchWebView.m */; };
 		087851FE2083F5A9008C523E /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 087851FD2083F5A9008C523E /* AppDelegate.m */; };
 		087852012083F5A9008C523E /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 087852002083F5A9008C523E /* ViewController.m */; };
 		087852042083F5A9008C523E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 087852022083F5A9008C523E /* Main.storyboard */; };
@@ -49,6 +50,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		080C891E20B51D9F008CF76A /* SearchWebView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SearchWebView.h; sourceTree = "<group>"; };
+		080C891F20B51D9F008CF76A /* SearchWebView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SearchWebView.m; sourceTree = "<group>"; };
 		087851F92083F5A9008C523E /* FindAudioBooks.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FindAudioBooks.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		087851FC2083F5A9008C523E /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		087851FD2083F5A9008C523E /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -159,6 +162,8 @@
 				08813C29209FF8E2005B55BD /* DBManager.m */,
 				08813C1F2098176D005B55BD /* FetchParseBookInfo.h */,
 				08813C202098176D005B55BD /* FetchParseBookInfo.m */,
+				080C891E20B51D9F008CF76A /* SearchWebView.h */,
+				080C891F20B51D9F008CF76A /* SearchWebView.m */,
 				087852392084062A008C523E /* Assets */,
 				087852022083F5A9008C523E /* Main.storyboard */,
 				087852052083F5AC008C523E /* Assets.xcassets */,
@@ -349,6 +354,7 @@
 				08CAAE9520A57B3700A6891A /* BookCell.m in Sources */,
 				0878520C2083F5AC008C523E /* main.m in Sources */,
 				08813C1E2091777E005B55BD /* TabBarViewController.m in Sources */,
+				080C892020B51D9F008CF76A /* SearchWebView.m in Sources */,
 				087851FE2083F5A9008C523E /* AppDelegate.m in Sources */,
 				08813C2A209FF8E2005B55BD /* DBManager.m in Sources */,
 			);
