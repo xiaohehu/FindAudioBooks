@@ -244,6 +244,31 @@
             NSInteger index = [str_bookTitle rangeOfString:@"'"].location;
             [modi_title replaceCharactersInRange:NSMakeRange(index, 1) withString:@""];
         }
+        // De-dup books
+        NSString *query_check = [NSString stringWithFormat:@"select * from bookInfo where isbn == %@", str_bookISBN];
+        NSArray *arr_existing = [[NSArray alloc] initWithArray:[self.dbManager loadDataFromDB:query_check]];
+        if (arr_existing.count >= 1) {
+            UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Book Already Added"
+                                                                                     message:@"This book is already in your library"
+                                                                              preferredStyle:UIAlertControllerStyleAlert];
+            //We add buttons to the alert controller by creating UIAlertActions:
+            UIAlertAction *actionOk = [UIAlertAction actionWithTitle:@"Ok"
+                                                               style:UIAlertActionStyleDefault
+                                                             handler:^(UIAlertAction * action) {
+                                                                 [_session startRunning];
+                                                                 self.uib_searchAudible.hidden = YES;
+                                                                 self.uib_addBook.hidden = YES;
+                                                                 [self.uil_isbn setText:nil];
+                                                                 [self.uil_title setText:nil];
+                                                                 [self.uiiv_cover setImage:nil];
+                                                             }];
+            [alertController addAction:actionOk];
+            [self presentViewController:alertController animated:YES completion:nil];
+            query_check = nil;
+            arr_existing = nil;
+            return;
+        }
+        
         
         NSString *query = [NSString stringWithFormat:@"insert into bookInfo values(null, '%@', '%@', %@)", modi_title, str_imageURL, str_bookISBN];
         NSLog(@"\n\n\n %@", query);
@@ -330,6 +355,8 @@
     [_session startRunning];
     [_uiv_searchContainer removeFromSuperview];
     _uiv_searchContainer = nil;
+    _uib_addBook.hidden = YES;
+    _uib_searchAudible.hidden = YES;
 }
 
 - (void)didReceiveMemoryWarning {
